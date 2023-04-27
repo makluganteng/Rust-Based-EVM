@@ -39,6 +39,19 @@ impl Stack {
         self.data.push(value);
     }
 
+    //swap functionality
+    pub fn swap(&mut self, index: usize) {
+        if self.data.len() == 0 {
+            panic!("Stack underflow");
+        }
+
+        if self.data.len() <= index {
+            panic!("Stack underflow");
+        }
+        let len = self.data.len();
+        self.data.swap(len-1, index);
+    }
+
     // Arithmetic operations
     pub fn add(&mut self) {
         if self.data.len() == 0 {
@@ -128,6 +141,18 @@ mod test {
         assert_eq!(stack.data[3], 2.into());
     }
 
+    #[test]
+    fn test_swap(){
+        let mut stack = Stack::new(10);
+        stack.push(U256::from(1));
+        stack.push(U256::from(2));
+        stack.push(U256::from(3));
+        stack.swap(1);
+        assert_eq!(stack.data.len(), 3);
+        assert_eq!(stack.data[0], 1.into());
+        assert_eq!(stack.data[1], 3.into());
+        assert_eq!(stack.data[2], 2.into());
+    }
     #[test]
     fn test_add(){
         let mut stack = Stack::new(10);
