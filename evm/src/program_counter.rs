@@ -1,6 +1,6 @@
 
 #[derive(Debug, Default)]
-pub struct ProgramCounter(pub usize);
+pub struct ProgramCounter(usize);
 
 impl ProgramCounter {
     pub fn new() -> ProgramCounter {

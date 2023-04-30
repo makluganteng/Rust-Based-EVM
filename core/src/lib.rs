@@ -1,2 +1,2 @@
-mod executor;
-mod opcode;
+pub mod executor;
+pub mod opcode;

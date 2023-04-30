@@ -1,3 +1,3 @@
-mod stack;
-mod memory;
-mod program_counter;
+pub mod stack;
+pub mod memory;
+pub mod program_counter;

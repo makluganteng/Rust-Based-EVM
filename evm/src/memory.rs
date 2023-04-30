@@ -1,5 +1,5 @@
 #[derive(Debug, Default)]
-struct Memory(Vec<u8>);
+pub struct Memory(Vec<u8>);
 
 
 impl Memory {

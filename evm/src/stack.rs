@@ -1,10 +1,21 @@
 use ethereum_types::U256;
-
+use thiserror::Error;
 pub struct Stack {
     size: usize,
     data: Vec<U256>
 }
 
+#[derive(Debug, Error)]
+pub enum StackError {
+    #[error("stack underflow")]
+    StackUnderflow,
+    #[error("stack overflow")]
+    StackOverflow,
+    #[error("index out of bounds")]
+    IndexOutOfBounds,
+}
+
+pub type Result<T> = std::result::Result<T, StackError>;
 
 impl Stack {
     //contsructor
@@ -15,32 +26,45 @@ impl Stack {
         }
     }
 
+    pub fn height(&self) -> usize {
+        self.data.len()
+    }
+
+    pub fn get(&self, index: usize) -> Result<U256> {
+        if self.data.len() <= index {
+            panic!("Stack underflow");
+        }
+        Ok(self.data[index])
+    }   
+
     //push functionality
-    pub fn push(&mut self, value: U256) {
+    pub fn push(&mut self, value: U256) -> Result<()> {
         if self.data.len() == self.size {
             panic!("Stack overflow");
         }
         self.data.push(value);
+        Ok(())
     }
     //pop functionality
-    pub fn pop(&mut self){
+    pub fn pop(&mut self) -> Result<U256>{
         if self.data.len() == 0 {
             panic!("Stack underflow");
         }
-        self.data.pop();
+        self.data.pop().ok_or(StackError::StackUnderflow)
     }
     //duplicate functionality
-    pub fn duplicate(&mut self, index: usize) {
+    pub fn duplicate(&mut self, index: usize) -> Result<()> {
         if self.data.len() == 0 {
             panic!("Stack underflow");
         }
         //[1,2,3,4,5]
         let value = self.data[self.data.len() - index];
         self.data.push(value);
+        Ok(())
     }
 
     //swap functionality
-    pub fn swap(&mut self, index: usize) {
+    pub fn swap(&mut self, index: usize) -> Result<()> {
         if self.data.len() == 0 {
             panic!("Stack underflow");
         }
@@ -50,6 +74,7 @@ impl Stack {
         }
         let len = self.data.len();
         self.data.swap(len-1, index);
+        Ok(())
     }
 
     // Arithmetic operations
