@@ -17,6 +17,14 @@ impl Execution {
         }
     }
 
+    pub fn get_stack(&self) -> &Stack {
+        &self.stack
+    }
+
+    pub fn get_height(&self) -> usize {
+        self.stack.height()
+    }
+
     pub fn run(&mut self, program: Vec<u8>) ->Vec<u8>{
         let mut result: Vec<u8> = Vec::new();
         while let Some(opcode) = program.get(self.program_counter.get()){

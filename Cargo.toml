@@ -2,5 +2,6 @@
 
 members = [
     "core",
-    "evm"
+    "evm",
+    "cli"
 ]
